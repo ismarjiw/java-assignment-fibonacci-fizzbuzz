@@ -2,6 +2,8 @@ package com.cooksys.ftd.assignments.control;
 
 import com.cooksys.ftd.assignments.control.util.MissingImplementationException;
 
+import java.util.Arrays;
+
 
 /**
  * FizzBuzz is an old programming exercise.
@@ -27,7 +29,10 @@ public class FizzBuzz {
      * @throws IllegalArgumentException if b is zero
      */
     public static boolean divides(int a, int b) throws IllegalArgumentException {
-        throw new MissingImplementationException();
+        if (b == 0) {
+            throw new IllegalArgumentException("Cannot divide by zero");
+        }
+        return a % b == 0;
     }
 
     /**
@@ -42,7 +47,16 @@ public class FizzBuzz {
      * @return a message according to the format above, or null if n is not divisible by either 3 or 5
      */
     public static String message(int n) {
-        throw new MissingImplementationException();
+        ;
+        if (n % 3 == 0 && n % 5 == 0) {
+            return n + ": FizzBuzz";
+        } else if (n % 3 == 0) {
+            return n + ": Fizz";
+        } else if (n % 5 == 0) {
+            return n + ": Buzz";
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -56,7 +70,21 @@ public class FizzBuzz {
      * @throws IllegalArgumentException if the given end is less than the given start
      */
     public static String[] messages(int start, int end) throws IllegalArgumentException {
-        throw new MissingImplementationException();
+        if (end < start) {
+            throw new IllegalArgumentException("End must be greater than or equal to start");
+        }
+
+        String[] array = new String[end - start];
+        int arrayIndex = 0;
+
+        for (int i = start; i < end; i++) {
+            String fizzBuzzMessage = message(i);
+            if (fizzBuzzMessage != null) {
+                array[arrayIndex] = fizzBuzzMessage;
+                arrayIndex++;
+            }
+        }
+        return Arrays.copyOf(array, arrayIndex);
     }
 
     /**
@@ -64,7 +92,12 @@ public class FizzBuzz {
      * the relevant messages to sysout
      */
     public static void main(String[] args) {
-        throw new MissingImplementationException();
+        int start = 1;
+        int end = 116;
+        for (int i = 1; i < 116; i++) {
+            String fizzBuzzMessage = message(i);
+            System.out.println(fizzBuzzMessage);
+        }
     }
 
 }
