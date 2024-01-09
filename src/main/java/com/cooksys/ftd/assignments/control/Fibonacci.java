@@ -1,6 +1,7 @@
 package com.cooksys.ftd.assignments.control;
 
-import com.cooksys.ftd.assignments.control.util.MissingImplementationException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The Fibonacci sequence is simply and recursively defined: the first two elements are `1`, and
@@ -23,9 +24,28 @@ public class Fibonacci {
      * @return the calculated element
      * @throws IllegalArgumentException if the given index is less than zero
      */
+    private static Map<Integer, Integer> memo = new HashMap<>();
+
     public static int atIndex(int i) throws IllegalArgumentException {
-        throw new MissingImplementationException();
+        if (i < 0) {
+            throw new IllegalArgumentException("Index must not be less than zero");
+        }
+
+        if (memo.containsKey(i)) {
+            return memo.get(i);
+        }
+
+        int result;
+        if (i == 0 || i == 1) {
+            result = 1;
+        } else {
+            result = atIndex(i - 1) + atIndex(i - 2);
+        }
+
+        memo.put(i, result);
+        return result;
     }
+
 
     /**
      * Calculates a slice of the fibonacci sequence, starting from a given start index (inclusive) and
@@ -38,7 +58,15 @@ public class Fibonacci {
      *                                  given end is less than the given start
      */
     public static int[] slice(int start, int end) throws IllegalArgumentException {
-        throw new MissingImplementationException();
+        if (start < 0 || end < 0 || end < start) {
+            throw new IllegalArgumentException("Invalid indices");
+        }
+
+        int[] s = new int[end - start];
+        for (int i = 0; i < s.length; i++) {
+            s[i] = atIndex(start + i);
+        }
+        return s;
     }
 
     /**
@@ -49,6 +77,16 @@ public class Fibonacci {
      * @throws IllegalArgumentException if the given count is negative
      */
     public static int[] fibonacci(int count) throws IllegalArgumentException {
-        throw new MissingImplementationException();
+        if (count < 0) {
+            throw new IllegalArgumentException("Count must be greater than or equal to zero");
+        }
+
+        int[] partialFib = new int[count];
+
+        for (int i = 0; i < partialFib.length; i++) {
+            partialFib[i] = atIndex(i);
+        }
+
+        return partialFib;
     }
 }
